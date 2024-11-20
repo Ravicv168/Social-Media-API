@@ -18,6 +18,7 @@ public class User {
 	 private String email;
 	 private String password;
 	 private String bio;
+	 
 	public Long getId() {
 		return id;
 	}
@@ -56,7 +57,9 @@ public class User {
 		this.password = password;
 		this.bio = bio;
 	}
-	 
 	
-	 
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+	 	 
 }
