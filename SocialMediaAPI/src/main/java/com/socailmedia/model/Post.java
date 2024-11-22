@@ -2,10 +2,17 @@ package com.socailmedia.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.Cascade;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Post {
@@ -21,6 +28,10 @@ public class Post {
 	private int dislikes=0;
 	
 	private LocalDateTime createdAt;
+	
+	@ManyToOne
+	@JsonBackReference
+    private User user;
 	
 	public Post() {
 		// TODO Auto-generated constructor stub
@@ -65,6 +76,14 @@ public class Post {
 
 	public void setDislikes(int dislikes) {
 		this.dislikes = dislikes;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Post(Long id, String title, String content, int likes, int dislikes) {

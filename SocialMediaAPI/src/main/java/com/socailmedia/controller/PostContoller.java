@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.socailmedia.model.Post;
@@ -25,40 +26,40 @@ public class PostContoller {
 	
 	@PostMapping("/create")
 	public ResponseEntity<Post> createPost(@RequestBody Post post){
-		return ResponseEntity.ok(postService.createPost(post));
+		return ResponseEntity.ok(postService.createPost(post,post.getUser()));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Post> getPost(@PathVariable Long id){
-		return ResponseEntity.ok(postService.getPost(id));
+	public ResponseEntity<Post> getPost(@PathVariable Long id,@RequestParam Long uid){
+		return ResponseEntity.ok(postService.getPost(id,uid));
 	}
 	
 	@GetMapping
-	public List<Post> getAllPosts() {
-	    return postService.getAllPosts();
+	public List<Post> getAllPosts(@RequestParam Long id) {
+	    return postService.getAllPosts(id);
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post post){
-		return ResponseEntity.ok(postService.updatePost(id, post));
+	public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post post, @RequestParam Long uid){
+		return ResponseEntity.ok(postService.updatePost(id, post,uid));
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletePost(@PathVariable Long id){
-		postService.deletePost(id);
+	public ResponseEntity<String> deletePost(@PathVariable Long id, @RequestParam Long uid){
+		postService.deletePost(id,uid);
 		return ResponseEntity.ok("Post deleted successfully");
 	}
 	
 	@PutMapping("/like/{id}")
-    public ResponseEntity<Post> likePost(@PathVariable Long id) {
-        Post likedPost = postService.likePost(id);
+    public ResponseEntity<Post> likePost(@PathVariable Long id,@RequestParam Long uid) {
+        Post likedPost = postService.likePost(id,uid);
         return ResponseEntity.ok(likedPost);
     }
 
 
     @PutMapping("/dislike/{id}")
-    public ResponseEntity<Post> dislikePost(@PathVariable Long id) {
-        Post dislikedPost = postService.dislikePost(id);
+    public ResponseEntity<Post> dislikePost(@PathVariable Long id,@RequestParam Long uid) {
+        Post dislikedPost = postService.dislikePost(id,uid);
         return ResponseEntity.ok(dislikedPost);
     }
 }

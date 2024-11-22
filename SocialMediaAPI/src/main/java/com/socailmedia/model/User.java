@@ -1,12 +1,19 @@
 package com.socailmedia.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 
 @Entity
 public class User {
@@ -18,6 +25,10 @@ public class User {
 	 private String email;
 	 private String password;
 	 private String bio;
+	 
+	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	 @JsonBackReference
+	 private List<Post> posts = new ArrayList<Post>();
 	 
 	public Long getId() {
 		return id;
@@ -49,6 +60,12 @@ public class User {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
+	public List<Post> getPosts() {
+		return posts;
+	}
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 	public User(Long id, String username, String email, String password, String bio) {
 		super();
 		this.id = id;
@@ -60,6 +77,11 @@ public class User {
 	
 	public User() {
 		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
 	}
 	 	 
 }
