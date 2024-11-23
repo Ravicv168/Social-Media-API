@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.socailmedia.model.Comment;
@@ -25,12 +26,12 @@ public class CommentController {
 	
 	@PostMapping("/create")
 	public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
-		return ResponseEntity.ok(commentService.createComment(comment));
+		return ResponseEntity.ok(commentService.createComment(comment,comment.getPost().getId()));
 	}
 	
 	@GetMapping
-	public List<Comment> viewAllComments(){
-		return commentService.viewAllComments();
+	public List<Comment> viewAllComments(@RequestParam Long pid){
+		return commentService.viewAllComments(pid);
 	}
 	
 	@PutMapping("/update/{id}")
@@ -39,8 +40,8 @@ public class CommentController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteComment(@PathVariable Long id) {
-		commentService.deleteComment(id);
+	public ResponseEntity<String> deleteComment(@PathVariable Long id,@RequestParam Long pid) {
+		commentService.deleteComment(id,pid);
 		return ResponseEntity.ok("Comment deleted Successfully");
 	}
 	

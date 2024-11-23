@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.socailmedia.model.Comment;
 import com.socailmedia.model.Post;
 import com.socailmedia.repository.CommentRepository;
+import com.socailmedia.repository.PostRepository;
 
 @Service
 public class CommentService {
@@ -16,12 +17,18 @@ public class CommentService {
 	@Autowired
 	public CommentRepository commentRepository;
 	
-	public Comment createComment(Comment comment) {
+	@Autowired
+	public PostRepository postRepository;
+	
+	public Comment createComment(Comment comment,Long pid) {
+		Post post= postRepository.findById(pid).get();
+		post.getComments().add(comment);
+		comment.setPost(post);
 		return commentRepository.save(comment);
 	}
 	
-	public List<Comment> viewAllComments(){
-		return commentRepository.findAll();
+	public List<Comment> viewAllComments(Long pid){
+		return postRepository.findById(pid).get().getComments();	
 	}
 	
 	public Comment editComment(Long id, Comment comment) {
@@ -33,8 +40,11 @@ public class CommentService {
 		return commentRepository.save(com);
 	}
 	
-	public void deleteComment(Long id) {
-		commentRepository.deleteById(id);
+	public void deleteComment(Long cid,Long pid) {
+		Comment cmt= commentRepository.findById(cid).get();
+		Post post= postRepository.findById(pid).get();
+		post.getComments().remove(cmt);
+		postRepository.save(post);
 	}
 	
 	public Comment likeComment(Long cid) {

@@ -2,10 +2,13 @@ package com.socailmedia.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Comment {
@@ -21,6 +24,10 @@ public class Comment {
 	
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	
+	@ManyToOne
+	@JsonBackReference
+    private Post post;
 	
 	public Comment() {
 		this.createdAt = createdAt.now();
@@ -73,6 +80,14 @@ public class Comment {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
 	public Comment(Long id, String content, int likes, int dislikes, LocalDateTime createdAt, LocalDateTime updatedAt) {
