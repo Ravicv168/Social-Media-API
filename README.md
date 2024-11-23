@@ -22,7 +22,7 @@ A simple backend API for social media platform built using Spring Boot. The API 
 
 ### Installation Steps:
 ### Configure application.properties: 
-    Update the database connection settings in src/main/resources/application.properties (for MySQL/PostgreSQL).
+Update the database connection settings in src/main/resources/application.properties (for MySQL/PostgreSQL).
 ### Install Dependencies:
     Use Maven to install dependencies.
     mvn clean install
