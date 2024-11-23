@@ -40,18 +40,22 @@ User Endpoints:
 Post Endpoints:
  - Create Post: POST /posts/create
  - Get All Posts: GET /posts?id={userId}
- - Get Post by ID: GET /api/posts/{postId}?uid={userId}
+ - Get Post by ID: GET /posts/{postId}?uid={userId}
  - Update Post: PUT /posts/update/{postId}?uid={userId}
  - Delete Post: DELETE /posts/{postId}?uid={userId}
 Follow/Unfollow Endpoints:
- - Follow a User: POST /users/{userId}/follow/{followUserId}
- - Unfollow a User: POST /users/{userId}/unfollow/{followUserId}
+ - Follow a User: PUT /users/{userId}/follow/{followUserId}
+ - Unfollow a User: PUT /users/{userId}/unfollow/{followUserId}
 Like/Dislike Endpoints:
- - Like a Post: POST /posts/like/{postId}?uid={userId}
- - Dislike a Post: POST /posts/dislike/{postId}?uid={userId}
+ - Like a Post: PUT /posts/like/{postId}?uid={userId}
+ - Dislike a Post: PUT /posts/dislike/{postId}?uid={userId}
+ - Like a Comment: PUT /comments/like/{id}
+ - Dislike a Comment: PUT /comments/dislike/{id}
 Comment Endpoints:
- - Add Comment to Post: POST /api/posts/{postId}/comments
- - Get Comments for Post: GET /api/posts/{postId}/comments
+ - Add Comment to Post: POST /comments/create
+ - Get Comments for Post: GET /comments?pid={postId}
+ - Edit a Comment: PUT /comments/update/{id}
+ - Delete a Comment: DELETE /comments/{id}?pid={postId}
 
 ## Testing the API
 Postman: Use Postman to test the endpoints by sending requests.
