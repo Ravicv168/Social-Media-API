@@ -27,7 +27,8 @@ A simple backend API for social media platform built using Spring Boot. The API 
     - Use Maven to install dependencies.
         -  mvn clean install
 ### Run the Application:
-    - To run the API locally, use: mvn spring-boot:run
+    - To run the API locally, use: 
+        -  mvn spring-boot:run
 
 ## API Endpoints
 ### User Endpoints:
