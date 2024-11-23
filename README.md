@@ -17,7 +17,7 @@ A simple backend API for social media platform built using Spring Boot. The API 
 
 ## Setup
 Clone the repository:
-git clone https://github.com/yourusername/social-media-api.git
+git clone https://github.com/Ravicv168/Social-Media-API.git
 cd social-media-api
 
 Installation Steps:
