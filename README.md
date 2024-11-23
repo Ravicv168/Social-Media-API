@@ -24,11 +24,11 @@ A simple backend API for social media platform built using Spring Boot. The API 
 ### Configure application.properties: 
 Update the database connection settings in src/main/resources/application.properties (for MySQL/PostgreSQL).
 ### Install Dependencies:
-    Use Maven to install dependencies.
-    mvn clean install
+#### Use Maven to install dependencies.
+     mvn clean install
 ### Run the Application:
-    To run the API locally, use: 
-    mvn spring-boot:run
+#### To run the API locally, use: 
+     mvn spring-boot:run
 
 ## API Endpoints
 ### User Endpoints:
