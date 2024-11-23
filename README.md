@@ -16,17 +16,17 @@ A simple backend API for social media platform built using Spring Boot. The API 
 - Maven (Build Tool)
 
 ## Setup
-Clone the repository:
-git clone https://github.com/Ravicv168/Social-Media-API.git
-cd social-media-api
+### Clone the repository:
+    - git clone https://github.com/Ravicv168/Social-Media-API.git
+    - cd social-media-api
 
-Installation Steps:
-Configure application.properties: 
+### Installation Steps:
+### Configure application.properties: 
     - Update the database connection settings in src/main/resources/application.properties (for MySQL/PostgreSQL).
-Install Dependencies:
+### Install Dependencies:
     - Use Maven to install dependencies.
         -  mvn clean install
-Run the Application:
+### Run the Application:
     - To run the API locally, use: mvn spring-boot:run
 
 ## API Endpoints
