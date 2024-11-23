@@ -37,6 +37,7 @@ User Endpoints:
  - Update User Profile: PUT /users/update/{username}
  - Get All the followers: GET /users/{userId}/followers
  - Get All the Following Users: GET /users/{userId}/following
+#
 Post Endpoints:
  - Create Post: POST /posts/create
  - Get All Posts: GET /posts?id={userId}
