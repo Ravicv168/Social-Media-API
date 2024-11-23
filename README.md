@@ -30,28 +30,28 @@ Run the Application:
     - To run the API locally, use: mvn spring-boot:run
 
 ## API Endpoints
-###User Endpoints:
+### User Endpoints:
  - Register User: POST /users/register
  - Get User Profile By Username: GET /users/name/{username}
  - Get User Profile By Email: GET /users/email/{email}
  - Update User Profile: PUT /users/update/{username}
  - Get All the followers: GET /users/{userId}/followers
  - Get All the Following Users: GET /users/{userId}/following
-###Post Endpoints:
+### Post Endpoints:
  - Create Post: POST /posts/create
  - Get All Posts: GET /posts?id={userId}
  - Get Post by ID: GET /posts/{postId}?uid={userId}
  - Update Post: PUT /posts/update/{postId}?uid={userId}
  - Delete Post: DELETE /posts/{postId}?uid={userId}
-###Follow/Unfollow Endpoints:
+### Follow/Unfollow Endpoints:
  - Follow a User: PUT /users/{userId}/follow/{followUserId}
  - Unfollow a User: PUT /users/{userId}/unfollow/{followUserId}
-###Like/Dislike Endpoints:
+### Like/Dislike Endpoints:
  - Like a Post: PUT /posts/like/{postId}?uid={userId}
  - Dislike a Post: PUT /posts/dislike/{postId}?uid={userId}
  - Like a Comment: PUT /comments/like/{id}
  - Dislike a Comment: PUT /comments/dislike/{id}
-###Comment Endpoints:
+### Comment Endpoints:
  - Add Comment to Post: POST /comments/create
  - Get Comments for Post: GET /comments?pid={postId}
  - Edit a Comment: PUT /comments/update/{id}
