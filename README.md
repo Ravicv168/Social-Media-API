@@ -10,7 +10,7 @@ A simple backend API for social media platform built using Spring Boot. The API 
 - Follow/Unfollow Users
 
 ## Technologies Used
-- Java 17
+- Java
 - Spring Boot
 - Spring Data JPA
 - Maven (Build Tool)
@@ -22,13 +22,13 @@ A simple backend API for social media platform built using Spring Boot. The API 
 
 ### Installation Steps:
 ### Configure application.properties: 
-    - Update the database connection settings in src/main/resources/application.properties (for MySQL/PostgreSQL).
+    Update the database connection settings in src/main/resources/application.properties (for MySQL/PostgreSQL).
 ### Install Dependencies:
-    - Use Maven to install dependencies.
-        -  mvn clean install
+    Use Maven to install dependencies.
+    mvn clean install
 ### Run the Application:
-    - To run the API locally, use: 
-        -  mvn spring-boot:run
+    To run the API locally, use: 
+    mvn spring-boot:run
 
 ## API Endpoints
 ### User Endpoints:
