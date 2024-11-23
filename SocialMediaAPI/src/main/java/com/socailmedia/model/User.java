@@ -1,6 +1,7 @@
 package com.socailmedia.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 
@@ -29,6 +32,15 @@ public class User {
 	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	 @JsonBackReference
 	 private List<Post> posts = new ArrayList<Post>();
+	 
+	 @ManyToMany(cascade = CascadeType.ALL)
+	 @JoinTable(name = "followers")
+	 @JsonBackReference
+	 private Set<User> following = new HashSet<User>();
+	    
+	 @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
+	 @JsonBackReference
+	 private Set<User> followers = new HashSet<User>();
 	 
 	public Long getId() {
 		return id;
@@ -65,6 +77,19 @@ public class User {
 	}
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+	
+	public Set<User> getFollowing() {
+		return following;
+	}
+	public void setFollowing(Set<User> following) {
+		this.following = following;
+	}
+	public Set<User> getFollowers() {
+		return followers;
+	}
+	public void setFollowers(Set<User> followers) {
+		this.followers = followers;
 	}
 	public User(Long id, String username, String email, String password, String bio) {
 		super();
