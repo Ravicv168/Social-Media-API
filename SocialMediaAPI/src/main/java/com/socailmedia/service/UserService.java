@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.socailmedia.exception.BadRequestException;
@@ -21,6 +22,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository; 
 	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	public User registerUser(User user) {
 		Optional<User> usr = userRepository.findByEmail(user.getEmail());
 		if(usr.isPresent()) {
@@ -30,6 +34,8 @@ public class UserService {
 		if(user.getUsername() == null || user.getUsername().isEmpty()) {
 			throw new BadRequestException("Username cannot be empty");
 		}
+		
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 	
@@ -67,7 +73,7 @@ public class UserService {
 		}
 		
 		if(user.getPassword()!=null) {
-			existinguser.setPassword(user.getPassword());
+			existinguser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		}
 		return userRepository.save(existinguser);
 	}
