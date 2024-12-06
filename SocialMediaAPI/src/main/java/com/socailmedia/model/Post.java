@@ -33,11 +33,11 @@ public class Post {
 	private LocalDateTime createdAt;
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
+	@JsonManagedReference("post-comment")
     private List<Comment> comments;
 	
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference("user-post")
     private User user;
 	
 	public Post() {

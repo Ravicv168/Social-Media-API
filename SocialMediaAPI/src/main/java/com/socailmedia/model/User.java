@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
@@ -30,16 +31,16 @@ public class User {
 	 private String bio;
 	 
 	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	 @JsonBackReference
+	 @JsonManagedReference("user-post")
 	 private List<Post> posts = new ArrayList<Post>();
 	 
 	 @ManyToMany(cascade = CascadeType.ALL)
 	 @JoinTable(name = "followers")
-	 @JsonBackReference
+	 @JsonBackReference("user-followers")
 	 private Set<User> following = new HashSet<User>();
 	    
 	 @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL)
-	 @JsonBackReference
+	 @JsonBackReference("user-following")
 	 private Set<User> followers = new HashSet<User>();
 	 
 	public Long getId() {

@@ -30,36 +30,24 @@ public class UserController {
 		return ResponseEntity.ok(userService.registerUser(user));
 	}
 	
-	@GetMapping("/name/{username}")
+	@PostMapping("/login")
+	public ResponseEntity<User> login(@RequestBody User user) {
+		return ResponseEntity.ok(userService.login(user));
+	}
+	
+	@GetMapping("/username/{username}")
 	public ResponseEntity<User> getUserByUserName(@PathVariable String username){
 		return ResponseEntity.ok(userService.getUserByUsername(username));
 	}
 	
 	@GetMapping("/email/{email}")
-	public ResponseEntity<Optional<User>> getUserByEmail(@PathVariable String email){
+	public ResponseEntity<User> getUserByEmail(@PathVariable String email){
 		return ResponseEntity.ok(userService.getUserByEmail(email));
 	}
 	
-	@PutMapping("/update/{username}")
+	@PutMapping("/{username}")
 	public ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User user){
-		User existinguser=userService.getUserByUsername(username);
-		
-		if(user.getEmail()!=null) {
-			existinguser.setEmail(user.getEmail());
-		}
-		
-		if(user.getBio()!=null) {
-			existinguser.setBio(user.getBio());
-		}
-		
-		if(user.getUsername()!=null) {
-			existinguser.setUsername(user.getUsername());
-		}
-		
-		if(user.getPassword()!=null) {
-			existinguser.setPassword(user.getPassword());
-		}
-		return ResponseEntity.ok(userService.updateUser(existinguser));
+		return ResponseEntity.ok(userService.updateUser(username,user));
 	}
 	
 	@PutMapping("{uid}/follow/{fuid}")

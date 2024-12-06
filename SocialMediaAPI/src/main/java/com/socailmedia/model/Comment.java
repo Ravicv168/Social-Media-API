@@ -26,7 +26,7 @@ public class Comment {
 	private LocalDateTime updatedAt;
 	
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference("post-comment")
     private Post post;
 	
 	public Comment() {

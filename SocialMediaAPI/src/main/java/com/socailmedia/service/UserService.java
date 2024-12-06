@@ -7,6 +7,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.socailmedia.exception.BadRequestException;
+import com.socailmedia.exception.EmailAlreadyExistsException;
+import com.socailmedia.exception.UserNotFoundException;
 import com.socailmedia.model.User;
 import com.socailmedia.repository.UserRepository;
 
@@ -19,19 +22,54 @@ public class UserService {
 	private UserRepository userRepository; 
 	
 	public User registerUser(User user) {
+		Optional<User> usr = userRepository.findByEmail(user.getEmail());
+		if(usr.isPresent()) {
+			throw new EmailAlreadyExistsException(user.getEmail());
+		}
+		
+		if(user.getUsername() == null || user.getUsername().isEmpty()) {
+			throw new BadRequestException("Username cannot be empty");
+		}
 		return userRepository.save(user);
 	}
 	
 	public User getUserByUsername(String username) {
-		return userRepository.findByUsername(username).get();
+		Optional<User> user = userRepository.findByUsername(username);
+		if(user.isEmpty())
+			throw new UserNotFoundException("username", username);
+		
+		return user.get();
 	}
 	
-	public Optional<User> getUserByEmail(String username) {
-		return userRepository.findByEmail(username);
+	public User getUserByEmail(String email) {
+		Optional<User> user = userRepository.findByEmail(email);
+		if(user.isEmpty())
+			throw new UserNotFoundException("email", email);
+		
+		return user.get();
 	}
 	
-	public User updateUser(User user) {
-		return userRepository.save(user);
+	public User updateUser(String username, User user) {
+		User existinguser=getUserByUsername(username);
+		
+		if(user.getEmail()!=null) {
+			if(getUserByEmail(user.getEmail())!=null)
+				throw new EmailAlreadyExistsException(user.getEmail());
+			existinguser.setEmail(user.getEmail());
+		}
+		
+		if(user.getBio()!=null) {
+			existinguser.setBio(user.getBio());
+		}
+		
+		if(user.getUsername()!=null) {
+			existinguser.setUsername(user.getUsername());
+		}
+		
+		if(user.getPassword()!=null) {
+			existinguser.setPassword(user.getPassword());
+		}
+		return userRepository.save(existinguser);
 	}
 	
 	@Transactional
@@ -59,5 +97,9 @@ public class UserService {
 	
 	public Set<User> getFollowingUsers(Long uid){
 		return userRepository.findById(uid).get().getFollowing();
+	}
+
+	public User login(User user) {
+		return getUserByUsername(user.getUsername());
 	}
 }
