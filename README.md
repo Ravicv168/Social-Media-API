@@ -12,7 +12,7 @@ A simple backend API for social media platform built using Spring Boot. The API 
 ## Technologies Used
 - Java
 - Spring Boot
-- Spring Security(Authenication)
+- Spring Security(Authentication)
 - Spring Data JPA
 - Maven (Build Tool)
 
