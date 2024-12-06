@@ -3,7 +3,7 @@
 A simple backend API for social media platform built using Spring Boot. The API supports user registration, post creation, commenting, liking posts, and user following.
 
 ## Features
-- User Registration
+- User Registration and Login
 - Create, Update, Delete Posts
 - Like/Dislike Posts and Comments
 - Comment on Posts
