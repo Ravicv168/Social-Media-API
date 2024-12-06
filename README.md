@@ -61,3 +61,4 @@ Update the database connection settings in src/main/resources/application.proper
 
 ## Testing the API
 Postman: Use Postman to test the endpoints by sending requests.
+Username and Password has to be passed, in the authorization section for authentication.
