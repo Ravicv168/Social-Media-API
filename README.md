@@ -34,7 +34,8 @@ Update the database connection settings in src/main/resources/application.proper
 ## API Endpoints
 ### User Endpoints:
  - Register User: POST /users/register
- - Get User Profile By Username: GET /users/name/{username}
+ - Login User: POST /users/login
+ - Get User Profile By Username: GET /users/username/{username}
  - Get User Profile By Email: GET /users/email/{email}
  - Update User Profile: PUT /users/{username}
  - Get All the followers: GET /users/{userId}/followers
