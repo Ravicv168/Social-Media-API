@@ -3,7 +3,7 @@
 A simple backend API for social media platform built using Spring Boot. The API supports user registration, post creation, commenting, liking posts, and user following.
 
 ## Features
-- User Registration
+- User Registration and Login
 - Create, Update, Delete Posts
 - Like/Dislike Posts and Comments
 - Comment on Posts
@@ -12,6 +12,7 @@ A simple backend API for social media platform built using Spring Boot. The API 
 ## Technologies Used
 - Java
 - Spring Boot
+- Spring Security(Authentication)
 - Spring Data JPA
 - Maven (Build Tool)
 
@@ -35,7 +36,7 @@ Update the database connection settings in src/main/resources/application.proper
  - Register User: POST /users/register
  - Get User Profile By Username: GET /users/name/{username}
  - Get User Profile By Email: GET /users/email/{email}
- - Update User Profile: PUT /users/update/{username}
+ - Update User Profile: PUT /users/{username}
  - Get All the followers: GET /users/{userId}/followers
  - Get All the Following Users: GET /users/{userId}/following
 ### Post Endpoints:
@@ -60,3 +61,4 @@ Update the database connection settings in src/main/resources/application.proper
 
 ## Testing the API
 Postman: Use Postman to test the endpoints by sending requests.
+Registered username and password has to be passed, in the authorization section for authentication.
