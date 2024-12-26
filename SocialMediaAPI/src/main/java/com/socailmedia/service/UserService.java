@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +16,15 @@ import com.socailmedia.exception.EmailAlreadyExistsException;
 import com.socailmedia.exception.UserNotFoundException;
 import com.socailmedia.model.User;
 import com.socailmedia.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
 	
+	private static final Logger logger= LoggerFactory.getLogger(UserService.class);
 	@Autowired
 	private UserRepository userRepository; 
 	
@@ -39,7 +45,9 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
+	@Cacheable(value = "userProfile", key = "#username")
 	public User getUserByUsername(String username) {
+		logger.info("Fetching user profile...");
 		Optional<User> user = userRepository.findByUsername(username);
 		if(user.isEmpty())
 			throw new UserNotFoundException("username", username);
@@ -47,7 +55,9 @@ public class UserService {
 		return user.get();
 	}
 	
+	@Cacheable(value = "userDetails", key = "#email")
 	public User getUserByEmail(String email) {
+		logger.info("Fetching user profile...");
 		Optional<User> user = userRepository.findByEmail(email);
 		if(user.isEmpty())
 			throw new UserNotFoundException("email", email);
@@ -79,6 +89,7 @@ public class UserService {
 	}
 	
 	@Transactional
+	@CacheEvict(value = {"followersCache", "followingCache"}, key = "#uid")
 	public void followUser(Long uid, Long fuid) {
 		User currentUser = userRepository.findById(uid).get();
 		User followUser = userRepository.findById(fuid).get();
@@ -87,7 +98,8 @@ public class UserService {
 	    userRepository.save(currentUser);
 	    userRepository.save(followUser);
 	}
-	    
+	
+	@CacheEvict(value = {"followersCache", "followingCache"}, key = "#uid")
 	public void unfollowUser(Long uid, Long unfid) {
 		User currentUser = userRepository.findById(uid).get();
 		User unfollowUser = userRepository.findById(unfid).get();
@@ -97,11 +109,15 @@ public class UserService {
 	    userRepository.save(unfollowUser);
 	}
 	
+	@Cacheable(value = "followersCache", key = "#uid")
 	public Set<User> getFollowers(Long uid){
+		logger.info("fetching the followers..");
 		return userRepository.findById(uid).get().getFollowers();
 	}
 	
+	@Cacheable(value = "followingCache", key = "#uid")
 	public Set<User> getFollowingUsers(Long uid){
+		logger.info("fetching the following users..");
 		return userRepository.findById(uid).get().getFollowing();
 	}
 

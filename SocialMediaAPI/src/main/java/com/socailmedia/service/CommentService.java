@@ -3,7 +3,12 @@ package com.socailmedia.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.socailmedia.model.Comment;
@@ -13,6 +18,8 @@ import com.socailmedia.repository.PostRepository;
 
 @Service
 public class CommentService {
+	
+	private static final Logger logger= LoggerFactory.getLogger(CommentService.class);
 
 	@Autowired
 	public CommentRepository commentRepository;
@@ -27,7 +34,9 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
+	@Cacheable(value = "viewCommentCache", key = "#pid")
 	public List<Comment> viewAllComments(Long pid){
+		logger.info("Fetching all the comments..");
 		return postRepository.findById(pid).get().getComments();	
 	}
 	
@@ -40,7 +49,9 @@ public class CommentService {
 		return commentRepository.save(com);
 	}
 	
+	@CacheEvict(value = "viewCommentCache", key = "#pid")
 	public void deleteComment(Long cid,Long pid) {
+		logger.info("deleting the comment..");
 		Comment cmt= commentRepository.findById(cid).get();
 		Post post= postRepository.findById(pid).get();
 		post.getComments().remove(cmt);
